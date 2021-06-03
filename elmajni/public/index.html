@@ -1,13 +1,144 @@
 <html>
 
 <head>
-  <title>Express</title>
+  <title>Mon Blog API</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
+  <form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Adresse Mail</label>
+      <input type="email" class="form-control" value="" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Mot de Passe</label>
+      <input type="password" class="form-control" value="" id="exampleInputPassword1" placeholder="Password">      
+      <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
+    </div>
+    <div class="form-group">
+      <select class="form-control">
+        <option value="admin" >Admin</option>
+        <option value="author" >Author</option>
+        <option value="guest" >Guest</option>
+      </select>
+      <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+  </form>
+
+  
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th id="id" scope="col">id</th>
+        <th id="username" scope="col">username</th>
+        <th id="email" scope="col">email</th>
+        <th id="role" scope="col">role</th>
+        <th id="createdAt" scope="col">createdAt</th>
+        <th id="updatedAt " scope="col">updatedAt</th>
+        <th id="action" scope="col">action</th>
+      </tr>
+    </thead>
+    <tbody id="users">
+      
+    </tbody>
+
+  </table>
+
+  
+  <button class="btn btn-primary" onclick="getPreviousFiveElt()">Précédent</button>
+  <button id="next" class="btn btn-primary" onclick="getNextFiveElt()">Suivant</button><br>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+       crossorigin="anonymous">
+  </script>
+       
+
+
+
+
+       <script>
+
+         var totalUserCount = 0;
+         var nbr = 0;
+
+         //fonction d'ajout d'un utilisateur
+         function addUser(){
+
+        } 
+        
+         //fonction de modification d'un utilisateur
+         function updateUser(id){
+
+         }
+
+         //fonction de suppression d'un utilisateur
+         function deleteUser(id){
+
+        }
+
+        function getList(){
+          let list = document.getElementById("users")
+          }
+          function getListOfUsers(offset) {
+            fetch('/users/offset/'+offset+'/limit/'+5, {
+              method: 'GET'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                var tr;
+                $('#users').html('');
+                for (var i = 0; i < data.length; i++) {
+                    tr = $('<tr/>');
+                    tr.append("<td>" + data[i].id + "</td>");
+                    tr.append("<td>" + data[i].username + "</td>");
+                    tr.append("<td>" + data[i].email + "</td>");
+                    tr.append("<td>" + data[i].role + "</td>");
+                    tr.append("<td>" + data[i].createdAt + "</td>");
+                    tr.append("<td>" + data[i].updatedAt + "</td>");
+                    tr.append("<td><button style='margin-right: 8px' class=\"btn btn-success btn-round\" type=\"button\">Modifier</button><button class=\"btn btn-danger btn-round\" type=\"button\">Supprimer</button></td>")
+                    $('#users').append(tr);
+                }
+            });
+            
+          }
+
+          function getNextFiveElt(){
+            if(nbr < totalUserCount){
+              getListOfUsers(nbr);
+              nbr+=5;
+            }
+            else{
+              document.getElementById("next").disabled = true;            }
+            
+          }
+
+          function getPreviousFiveElt(){
+            getListOfUsers(nbr);
+            if(nbr>5)
+              nbr-=5;
+          }
+
+          function getTotalUsersCount() {
+            fetch('/users?usersNbr', {
+              method: 'GET'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+              totalUserCount = parseInt(data.message);
+              console.log(totalUserCount);
+            });
+            
+          }
+
+       </script>
+
+       <script>
+        getTotalUsersCount();
+      </script>
 </body>
 
 </html>

@@ -1,0 +1,56 @@
+http://localhost:8080/users/7
+
+###
+http://localhost:8080/users
+
+###
+
+DELETE http://localhost:8080/users
+
+###
+
+POST http://localhost:8080/users 
+content-type: application/json
+
+{
+    "username": "khaoula",
+    "email": "elmajnikhaoula99@gmail.com",
+    "password": "VFDX3456",
+    "role": "admin"
+}
+
+
+###
+
+PUT http://localhost:8080/users/27 
+content-type: application/json
+
+{
+    "username": "khaoula",
+    "email": "elmajnikhaoula99@gmail.com",
+    "password": "VFDX3456",
+    "role": "guest"
+}
+
+### Step over the first 8 users and take 2 users 
+GET http://localhost:8080/users/offset/8/limit/2
+
+
+### Get all admins
+GET http://localhost:8080/users/admins
+
+### Get all authors
+GET http://localhost:8080/users/authors
+
+### Get all guests
+GET http://localhost:8080/users/guests
+
+### Get user by email
+GET http://localhost:8080/users/email/Einar26@yahoo.com
+
+
+
+###
+GET http://localhost:8080/users/29
+###
+GET http://localhost:8080/users?usersNbr
