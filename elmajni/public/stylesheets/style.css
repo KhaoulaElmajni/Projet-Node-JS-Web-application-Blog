@@ -11,3 +11,7 @@ form{
   right: 40%;
   align-items: center;
 }
+
+#modifier{
+  display: none;
+}

@@ -14,7 +14,7 @@ content-type: application/json
 
 {
     "username": "khaoula",
-    "email": "elmajnikhaoula99@gmail.com",
+    "email": "elmajnikhaoula9@gmail.com",
     "password": "VFDX3456",
     "role": "admin"
 }
@@ -22,7 +22,7 @@ content-type: application/json
 
 ###
 
-PUT http://localhost:8080/users/27 
+PUT http://localhost:8080/users/32
 content-type: application/json
 
 {
@@ -51,6 +51,6 @@ GET http://localhost:8080/users/email/Einar26@yahoo.com
 
 
 ###
-GET http://localhost:8080/users/29
+GET http://localhost:8080/users/30
 ###
 GET http://localhost:8080/users?usersNbr

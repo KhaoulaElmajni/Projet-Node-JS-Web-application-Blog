@@ -4,29 +4,37 @@
   <title>Mon Blog API</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 
 <body>
   <form>
     <div class="form-group">
+      <label for="exampleInputEmail1">Username</label>
+      <input type="text" class="form-control" value="" id="username" aria-describedby="emailHelp" placeholder="Enter email">
+      <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
+    </div>
+    <div class="form-group">
       <label for="exampleInputEmail1">Adresse Mail</label>
-      <input type="email" class="form-control" value="" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      <input type="email" class="form-control" value="" id="email" aria-describedby="emailHelp" placeholder="Enter email">
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Mot de Passe</label>
-      <input type="password" class="form-control" value="" id="exampleInputPassword1" placeholder="Password">      
+      <input type="password" class="form-control" value="" id="password" placeholder="Password">      
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
     <div class="form-group">
-      <select class="form-control">
+      <select id="role" class="form-control">
         <option value="admin" >Admin</option>
         <option value="author" >Author</option>
         <option value="guest" >Guest</option>
       </select>
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
-    <button type="submit" class="btn btn-primary">Ajouter</button>
+    <button type="submit" id="ajouter" class="btn btn-primary" onclick="addUser()">Ajouter</button>
+    <button type="submit" id="modifier" class="btn btn-primary">Modifier</button>
+  
   </form>
 
   
@@ -49,13 +57,13 @@
   </table>
 
   
-  <button class="btn btn-primary" onclick="getPreviousFiveElt()">Précédent</button>
+  <button id="previous" class="btn btn-primary" onclick="getPreviousFiveElt()">Précédent</button>
   <button id="next" class="btn btn-primary" onclick="getNextFiveElt()">Suivant</button><br>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
        crossorigin="anonymous">
   </script>
-       
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
@@ -67,17 +75,121 @@
 
          //fonction d'ajout d'un utilisateur
          function addUser(){
-
+          let email = document.getElementById("email").value;
+              let username = document.getElementById("username").value;
+              let password = document.getElementById("password").value;
+              let role = document.getElementById("role").value;
+          var data = {
+            email : email,
+            username : username,
+            password :password,
+            role : role
+          };
+          let body  = JSON.stringify(data);
+         
+          fetch('/users', {
+              method: 'POST',
+              body: body,
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              }
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data){
+              
+                    nbr = 0;
+                    getListOfUsers(nbr);
+                    console.log(data);
+            });
         } 
+
+        function sendPutRequest(id){
+          let email = document.getElementById("email").value;
+              let username = document.getElementById("username").value;
+              let password = document.getElementById("password").value;
+              let role = document.getElementById("role").value;
+          var data = {
+            email : email,
+            username : username,
+            password :password,
+            role : role
+          };
+          let body  = JSON.stringify(data);
+         
+          fetch('/users/'+id, {
+              method: 'PUT',
+              body: body,
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              }
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data){
+             
+              if(data.status === 200){
+              document.getElementById("ajouter").style.display = "block";
+              document.getElementById("modifier").style.display = "none";
+              nbr = 0;
+              getNextFiveElt(nbr);
+              }
+
+            });
+        }
         
          //fonction de modification d'un utilisateur
          function updateUser(id){
+          fetch('/users/'+id, {
+              method: 'GET'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data){
+              let email = document.getElementById("email");
+              let username = document.getElementById("username");
+              let password = document.getElementById("password");
+              let role = document.getElementById("role");
 
+              if(data.status === 200){
+              document.getElementById("ajouter").style.display = "none";
+              document.getElementById("modifier").style.display = "block";
+              document.getElementById("modifier").setAttribute('onclick','sendPutRequest('+id+');');
+              email.value = data.content.email;
+              username.value = data.content.username;
+              password.value = data.content.password;
+              role.value = data.content.role;
+              }
+            });
          }
 
          //fonction de suppression d'un utilisateur
          function deleteUser(id){
-
+          Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Delete`,
+            denyButtonText: `Don't delete`,
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              fetch('/users/'+id, {
+              method: 'DELETE'
+            }).then(function (response) {
+                return response.json();
+             
+            }).then(function (data){
+              console.log(data);
+                    Swal.fire("Deleted!", "Your imaginary file has been deleted.", "success");
+                    nbr = 0;
+                    getListOfUsers(nbr);
+            });
+              
+            } else if (result.isDenied) {
+              Swal.fire('not deleted', '', 'info')
+            }
+          })
+          
         }
 
         function getList(){
@@ -88,7 +200,7 @@
               method: 'GET'
             }).then(function (response) {
                 return response.json();
-            }).then(function (data) {
+            }).then(function (data){
                 var tr;
                 $('#users').html('');
                 for (var i = 0; i < data.length; i++) {
@@ -99,28 +211,36 @@
                     tr.append("<td>" + data[i].role + "</td>");
                     tr.append("<td>" + data[i].createdAt + "</td>");
                     tr.append("<td>" + data[i].updatedAt + "</td>");
-                    tr.append("<td><button style='margin-right: 8px' class=\"btn btn-success btn-round\" type=\"button\">Modifier</button><button class=\"btn btn-danger btn-round\" type=\"button\">Supprimer</button></td>")
+                    tr.append("<td><button style='margin-right: 8px' class=\"btn btn-success btn-round\" onclick=\"updateUser("+data[i].id+")\" type=\"button\">Modifier</button><button class=\"btn btn-danger btn-round\" onclick=\"deleteUser("+data[i].id+")\" type=\"button\">Supprimer</button></td>")
                     $('#users').append(tr);
                 }
             });
-            
           }
 
           function getNextFiveElt(){
+            document.getElementById("previous").disabled = false;
             if(nbr < totalUserCount){
               getListOfUsers(nbr);
               nbr+=5;
             }
             else{
-              document.getElementById("next").disabled = true;            }
-            
+              document.getElementById("next").disabled = true;           
+            }
+            console.log(nbr);
           }
 
           function getPreviousFiveElt(){
-            getListOfUsers(nbr);
-            if(nbr>5)
+            if(nbr>0){
               nbr-=5;
+              getListOfUsers(nbr);
+            }
+            if(document.getElementById("next").disabled)
+              document.getElementById("next").disabled = false;  
+            if(nbr == 0)
+              document.getElementById("previous").disabled = true;
+            console.log(nbr);
           }
+            
 
           function getTotalUsersCount() {
             fetch('/users?usersNbr', {
@@ -130,6 +250,8 @@
             }).then(function (data) {
               totalUserCount = parseInt(data.message);
               console.log(totalUserCount);
+              getNextFiveElt();
+              document.getElementById("previous").disabled = true;
             });
             
           }
@@ -138,6 +260,7 @@
 
        <script>
         getTotalUsersCount();
+        
       </script>
 </body>
 
