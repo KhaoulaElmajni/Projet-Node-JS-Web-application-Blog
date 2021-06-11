@@ -106,3 +106,6 @@ GET http://localhost:8080/comments?commentsNbr
 
 ###
 GET http://localhost:8080/comments/3
+
+###
+GET http://localhost:8080/tags
