@@ -36,6 +36,7 @@ content-type: application/json
 GET http://localhost:8080/users/offset/8/limit/2
 
 
+
 ### Get all admins
 GET http://localhost:8080/users/admins
 
@@ -54,3 +55,54 @@ GET http://localhost:8080/users/email/Einar26@yahoo.com
 GET http://localhost:8080/users/30
 ###
 GET http://localhost:8080/users?usersNbr
+
+###
+GET http://localhost:8080/articles
+
+###
+GET http://localhost:8080/articles/UserId/1
+
+###
+GET http://localhost:8080/articles/7
+###
+POST http://localhost:8080/articles
+content-type: application/json
+
+{
+    "title": "khaoula",
+    "content": "khaoula khaoula khaoula khaoula khaoula",
+    "published": 1
+}
+
+###
+
+DELETE http://localhost:8080/articles
+###
+
+PUT http://localhost:8080/articles/11
+content-type: application/json
+
+{
+    "title": "khaoula",
+    "content": "khaoula khaoula khaoula khaoula khaoula",
+    "published": 0
+}
+
+### Step over the first 8 users and take 2 users 
+GET http://localhost:8080/articles/offset/8/limit/2
+
+
+### Get article by userid
+GET http://localhost:8080/articles/userid/1
+
+###
+GET http://localhost:8080/articles?articlesNbr
+
+###
+http://localhost:8080/comments
+
+###
+GET http://localhost:8080/comments?commentsNbr
+
+###
+GET http://localhost:8080/comments/3
