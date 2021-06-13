@@ -25,8 +25,13 @@ router.get('/:id', async function (req, res, next) {
 });
 
 router.get('/userid/:userid', async function (req, res, next) {
-   const userId = req.params.userId;
+   const userId = req.params.userid;
    res.send(await articlesRepo.getArticlesByUserId(userId))
+});
+
+router.get('/title/:title', async function (req, res, next) {
+   const title = req.params.title;
+   res.send(await articlesRepo.getArticlesByTitle(title))
 });
 
 router.delete('/:id', async function (req, res, next) {

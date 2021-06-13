@@ -16,7 +16,7 @@ module.exports = {
    },
    
    getComment(id) {
-       return User.findByPk(id).then(result => {
+       return Comment.findByPk(id).then(result => {
            if (result) {
                return { status: 200 ,
                         content: result

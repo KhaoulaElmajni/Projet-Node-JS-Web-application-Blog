@@ -16,11 +16,23 @@ module.exports = {
    },
 
    getArticlesByUserId(userId) {
-    return Article.findAll({where: {UserId: userId}}).then(result => {
+    return Article.findAll({where: {userId: userId}}).then(result => {
         if (result) {
             return result
         } else {
             return {message: "L'utilisateur n'a pas d'articles !"}
+        }
+    }).catch(error => {
+        return {message: 'Erreur : ' + error.message}
+    });
+},
+
+getArticlesByTitle(title) {
+    return Article.findAll({where: {title: title}}).then(result => {
+        if (result) {
+            return result
+        } else {
+            return {message: "L'article avec ce titre n'existe pas !"}
         }
     }).catch(error => {
         return {message: 'Erreur : ' + error.message}

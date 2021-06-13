@@ -8,7 +8,10 @@
 </head>
 
 <body>
+  
   <form>
+    <fieldset>
+      <legend id="legend">Ajouter un utilisateur</legend>
     <div class="form-group">
       <label for="exampleInputEmail1">Username</label>
       <input type="text" class="form-control" value="" id="username" aria-describedby="emailHelp" placeholder="Enter email">
@@ -25,6 +28,7 @@
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
     <div class="form-group">
+      <label for="exampleInputPassword1">Role</label>
       <select id="role" class="form-control">
         <option value="admin" >Admin</option>
         <option value="author" >Author</option>
@@ -34,7 +38,7 @@
     </div>
     <button type="submit" id="ajouter" class="btn btn-primary" onclick="addUser()">Ajouter</button>
     <button type="submit" id="modifier" class="btn btn-primary">Modifier</button>
-  
+    </fieldset>
   </form>
 
   
@@ -108,7 +112,8 @@
           let email = document.getElementById("email").value;
               let username = document.getElementById("username").value;
               let password = document.getElementById("password").value;
-              let role = document.getElementById("role").value;
+              let role = document.getElementById("role").value; 
+              
           var data = {
             email : email,
             username : username,
