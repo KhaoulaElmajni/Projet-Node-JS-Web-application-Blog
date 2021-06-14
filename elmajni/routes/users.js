@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 const usersRepo = require('../repositories/users')
+const articlesRepo = require('../repositories/articles')
 
 router.get('/', async function (req, res, next) {
    const usersNbr = req.query.usersNbr;
@@ -54,12 +55,22 @@ router.post('/', async function (req, res, next) {
    res.send(await usersRepo.addUser(user))
 });
 
+let post = router.post('/login', async function (req, res, next) {
+   const cridentials = req.body;
+   res.send(await usersRepo.login(cridentials));
+});
+
 router.put('/:id', async function (req, res, next) {
    const id = req.params.id;
    const user = req.body;
    res.send(await usersRepo.updateUser(id, user))
 });
 
+router.get('/:id/articles', async function (req, res, next) {
+   const id = req.params.id;
+   const message = await articlesRepo.getArticlesByUserId(id);
+   res.status(message.status).send(message)
+});
 
 module.exports = router;
 

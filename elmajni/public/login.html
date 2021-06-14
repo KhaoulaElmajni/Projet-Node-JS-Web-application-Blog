@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <title>Mon Blog API</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+<form>
+    <fieldset>
+        <legend id="legend">Se connecter</legend>
+        <div class="form-group">
+            <label>Adresse Mail</label>
+            <input type="email" class="form-control" value="" id="email" aria-describedby="emailHelp"
+                   placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
+        </div>
+        <div class="form-group">
+            <label>Mot de Passe</label>
+            <input type="password" class="form-control" value="" id="password" placeholder="Password">
+            <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
+        </div>
+        <button type="button" id="ajouter" class="btn btn-primary" onclick="login()">Se connecter</button>
+    </fieldset>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+    function login() {
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+        var data = {
+            email: email,
+            password: password
+        };
+        let body = JSON.stringify(data);
+
+        fetch('/users/login', {
+            method: 'POST',
+            body: body,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if (data.code === 1) {
+                Swal.fire("Connecteé avec succés !", "Connecteé avec succés !", "success");
+                setCookie("jwt", data.token);
+                location.href="index.html"
+            }
+        });
+    }
+
+
+</script>
+
+<script>
+
+    let token = getCookie("jwt");
+    if (token !== undefined) {
+        location.href = "index.html";
+    }
+
+
+    function setCookie(name, value) {
+        var expires = "";
+        if (15) {
+            var date = new Date();
+            date.setTime(date.getTime() + (15 * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return undefined;
+    }
+
+    function eraseCookie(name) {
+        document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+</script>
+
+
+</body>
+
+</html>

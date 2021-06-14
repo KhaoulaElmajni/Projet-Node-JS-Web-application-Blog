@@ -85,6 +85,7 @@ DELETE http://localhost:8080/articles/11
 
 PUT http://localhost:8080/articles/12
 content-type: application/json
+
 {
     "title": "yos",
     "content": "khaoula khaoula khaoula khaoula ok",
@@ -97,16 +98,18 @@ GET http://localhost:8080/articles/offset/8/limit/2
 
 
 ### Get article by userid
-GET http://localhost:8080/articles/userid/5
+GET http://localhost:8080/users/5/articles
 
 ### Get article by title
 GET http://localhost:8080/articles/title/khaoula
 
 ###
 GET http://localhost:8080/articles?articlesNbr
-###
 
-DELETE http://localhost:8080/articles/11
+
+
+
+
 
 ###
 http://localhost:8080/comments
@@ -130,9 +133,10 @@ content-type: application/json
 
 PUT http://localhost:8080/comments/11
 content-type: application/json
+
 {
-    "content": "khaoula khaoula khaoula khaoula elmajni",
-    "ArticleId": 13
+    "content": "khaokkkula khaoula khaoula khaoula elmajni",
+    "ArticleId": 1
 }
 
 ###
@@ -167,3 +171,31 @@ content-type: application/json
    "name": "ok khaoula khaoula elmajni"
 }
 
+###
+GET http://localhost:8080/articles/5/comments
+
+###
+GET http://localhost:8080/comments
+
+###
+POST http://localhost:8080/users/login
+content-type: application/json
+
+{
+  "email": "Virgie_Konopelski@hotmail.com",
+  "password": "FpYJLPurNEfK"
+}
+
+
+### guest
+DELETE http://localhost:8080/articles/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJSYW5kYWxsODgiLCJlbWFpbCI6Ik1hZGVsaW5lLkx1ZXR0Z2VuQHlhaG9vLmNvbSIsInBhc3N3b3JkIjoiOFBQTWFxZTBMNTBlIiwicm9sZSI6Imd1ZXN0IiwiY3JlYXRlZEF0IjoiMjAxOS0wMy0wNVQxNDoyNjo1Mi4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMS0wMS0xM1QxNToyMDozMy4wMDBaIn0sInJvbGUiOiJndWVzdCIsImlhdCI6MTYyMzUzOTQ4Nn0.BIkKV0DtOC-WLevm7lQUvf7SmfTmfp3aQR0dvcfLPms
+
+### admin
+DELETE http://localhost:8080/articles/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MiwidXNlcm5hbWUiOiJSb3hhbm5lODkiLCJlbWFpbCI6IkRhbGxhc19KYWNvYmk2QHlhaG9vLmNvbSIsInBhc3N3b3JkIjoiT2E2T0dzY053S0RWIiwicm9sZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAxOC0xMi0yNFQwOTo1Mzo0Ni4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMS0wMi0xOVQyMToyNjo0NS4wMDBaIn0sInJvbGUiOiJhZG1pbiIsImlhdCI6MTYyMzU0MDQ0NX0.bqYGCLBuIaeXNt6QJsrMwCxJeafFZQ2mMAdqKOBf2Ls
+
+
+### author
+DELETE http://localhost:8080/articles/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MywidXNlcm5hbWUiOiJBbGVzc2FuZHJhMzkiLCJlbWFpbCI6IlZpcmdpZV9Lb25vcGVsc2tpQGhvdG1haWwuY29tIiwicGFzc3dvcmQiOiJGcFlKTFB1ck5FZksiLCJyb2xlIjoiYXV0aG9yIiwiY3JlYXRlZEF0IjoiMjAxOS0wNi0xMFQxMDoxNTozOS4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMS0wNC0wNVQyMjoxODozNy4wMDBaIn0sInJvbGUiOiJhdXRob3IiLCJpYXQiOjE2MjM1NDE4Nzh9.liRjp4QPC47BxZz-bYtw14mKkYoA-VI4lY5GIcZFQOw

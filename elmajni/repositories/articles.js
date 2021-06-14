@@ -18,7 +18,9 @@ module.exports = {
    getArticlesByUserId(userId) {
     return Article.findAll({where: {userId: userId}}).then(result => {
         if (result) {
-            return result
+            return { status: 200 ,
+                content: result
+            }
         } else {
             return {message: "L'utilisateur n'a pas d'articles !"}
         }
@@ -30,9 +32,13 @@ module.exports = {
 getArticlesByTitle(title) {
     return Article.findAll({where: {title: title}}).then(result => {
         if (result) {
-            return result
+            return { status: 200 ,
+                content: result
+            }
         } else {
-            return {message: "L'article avec ce titre n'existe pas !"}
+            return { status: 404 ,
+                message: "L'article n'est pas trouvé !"
+            }
         }
     }).catch(error => {
         return {message: 'Erreur : ' + error.message}
