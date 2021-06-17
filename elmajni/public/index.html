@@ -1,31 +1,33 @@
 <html>
 
 <head>
-  <title>Mon Blog API</title>
+  <title>Khaoula Elmajni's Blog API</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+ 
 </head>
 
 <body>
+  
 <button type="button" class="btn btn-primary" onclick="logout()">Se déconnecter</button>
 
 <form>
     <fieldset>
-      <legend id="legend">Ajouter un utilisateur</legend>
+      <legend id="legend"><i class="far fa-user"></i> Ajouter un utilisateur</legend>
     <div class="form-group">
-      <label for="exampleInputEmail1">Username</label>
-      <input type="text" class="form-control" value="" id="username" aria-describedby="emailHelp" placeholder="Enter email">
+      <label for="exampleInputEmail1">Nom d'utilasteur</label>
+      <input type="text" class="form-control" value="" id="username" aria-describedby="emailHelp" required placeholder="Enter username">
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">Adresse Mail</label>
-      <input type="email" class="form-control" value="" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+      <input type="email" class="form-control" value="" id="email" aria-describedby="emailHelp" required placeholder="Enter email">
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Mot de Passe</label>
-      <input type="password" class="form-control" value="" id="password" placeholder="Password">      
+      <input type="password" class="form-control" value="" id="password" required placeholder="Password">      
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
     <div class="form-group">
@@ -37,8 +39,8 @@
       </select>
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
-    <button type="submit" id="ajouter" class="btn btn-primary" onclick="addUser()">Ajouter</button>
-    <button type="submit" id="modifier" class="btn btn-primary">Modifier</button>
+    <button type="submit" id="ajouter" class="btn btn-primary" onclick="addUser()"><i class="fas fa-plus"></i>  Ajouter</button>
+    <button type="submit" id="modifier" class="btn btn-primary"><i class="fas fa-pencil-alt"></i> Modifier</button>
     </fieldset>
   </form>
 
@@ -46,13 +48,13 @@
   <table class="table table-sm">
     <thead>
       <tr>
-        <th id="id" scope="col">id</th>
-        <th id="username" scope="col">username</th>
-        <th id="email" scope="col">email</th>
-        <th id="role" scope="col">role</th>
-        <th id="createdAt" scope="col">createdAt</th>
-        <th id="updatedAt " scope="col">updatedAt</th>
-        <th id="action" scope="col">action</th>
+        <th id="id" scope="col"><i class="fas fa-id-card-alt"></i> id</th>
+        <th id="username" scope="col"><i class="fas fa-user"></i> username</th>
+        <th id="email" scope="col"><i class="fas fa-mail-bulk"></i> email</th>
+        <th id="role" scope="col"><i class="fas fa-user-tag"></i> role</th>
+        <th id="createdAt" scope="col"><i class="fas fa-calendar-plus"></i> createdAt</th>
+        <th id="updatedAt " scope="col"><i class="fas fa-user-edit"></i> updatedAt</th>
+        <th id="action" scope="col"><i class="fas fa-tools"></i> action</th>
       </tr>
     </thead>
     <tbody id="users">
@@ -62,8 +64,8 @@
   </table>
 
   
-  <button id="previous" class="btn btn-primary" onclick="getPreviousFiveElt()">Précédent</button>
-  <button id="next" class="btn btn-primary" onclick="getNextFiveElt()">Suivant</button><br>
+  <button id="previous" class="btn btn-primary" onclick="getPreviousFiveElt()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+  <button id="next" class="btn btn-primary" onclick="getNextFiveElt()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button><br>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
        crossorigin="anonymous">
@@ -73,7 +75,7 @@
 
 
 
-       <script>
+      <script>
 
          var totalUserCount = 0;
          var nbr = 0;
@@ -103,10 +105,11 @@
             }).then(function (response) {
                 return response.json();
             }).then(function (data){
-              
+              swal.fire("l'utilisateur a été ajouté ", "ok", "success");
                     nbr = 0;
                     getListOfUsers(nbr);
                     console.log(data);
+                    
             });
         } 
 
@@ -138,8 +141,11 @@
               if(data.status === 200){
               document.getElementById("ajouter").style.display = "block";
               document.getElementById("modifier").style.display = "none";
+              swal.fire("l'utilisateur a été modifié");
               nbr = 0;
+              
               getNextFiveElt(nbr);
+              
               }
 
             });
@@ -165,6 +171,8 @@
               username.value = data.content.username;
               password.value = data.content.password;
               role.value = data.content.role;
+             
+              swal.fire("Vous etes en train de modifier l'utilisateur "+username.value);
               }
             });
          }
@@ -172,13 +180,13 @@
          //fonction de suppression d'un utilisateur
          function deleteUser(id){
           Swal.fire({
-            title: 'Do you want to save the changes?',
+            title: 'Voulez-vous vraiment supprimé cet utilisateur ?',
             showDenyButton: true,
             showCancelButton: false,
-            confirmButtonText: `Delete`,
-            denyButtonText: `Don't delete`,
+            confirmButtonText: `Supprimer`,
+            denyButtonText: `Non`,
           }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
+
             if (result.isConfirmed) {
               fetch('/users/'+id, {
               method: 'DELETE'
@@ -187,13 +195,13 @@
              
             }).then(function (data){
               console.log(data);
-                    Swal.fire("Deleted!", "Your imaginary file has been deleted.", "success");
+                    Swal.fire("Supprimé!", "l\'utilisateur est supprimé.", "success");
                     nbr = 0;
                     getListOfUsers(nbr);
             });
               
             } else if (result.isDenied) {
-              Swal.fire('not deleted', '', 'info')
+              Swal.fire('l\'utilisateur n\'est pas supprimé', '', 'info')
             }
           })
           
@@ -202,7 +210,7 @@
         function getList(){
           let list = document.getElementById("users")
           }
-          function getListOfUsers(offset) {
+        function getListOfUsers(offset) {
             fetch('/users/offset/'+offset+'/limit/'+5, {
               method: 'GET'
             }).then(function (response) {
@@ -218,7 +226,7 @@
                     tr.append("<td>" + data[i].role + "</td>");
                     tr.append("<td>" + data[i].createdAt + "</td>");
                     tr.append("<td>" + data[i].updatedAt + "</td>");
-                    tr.append("<td><button style='margin-right: 8px' class=\"btn btn-success btn-round\" onclick=\"updateUser("+data[i].id+")\" type=\"button\">Modifier</button><button class=\"btn btn-danger btn-round\" onclick=\"deleteUser("+data[i].id+")\" type=\"button\">Supprimer</button></td>")
+                    tr.append("<td><button style='margin-right: 8px' class=\"btn btn-success btn-round\" onclick=\"updateUser("+data[i].id+")\" type=\"button\"><i class=\"fas fa-pen\"></i></button><button class=\"btn btn-danger btn-round\" onclick=\"deleteUser("+data[i].id+")\" type=\"button\"><i class=\"fas fa-trash\"></i></button></td>")
                     $('#users').append(tr);
                 }
             });

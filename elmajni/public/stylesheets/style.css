@@ -52,3 +52,9 @@ fieldset{
   color: rgb(1, 61, 172);
   border-radius: 10px ;
 }
+#legend{
+  font-size: 46px;
+  left: 50%;
+  right: 50%;
+  align-self: center;
+}

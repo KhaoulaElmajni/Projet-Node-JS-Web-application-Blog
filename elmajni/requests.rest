@@ -172,7 +172,7 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:8080/articles/5/comments
+GET http://localhost:8080/articles/6/comments
 
 ###
 GET http://localhost:8080/comments

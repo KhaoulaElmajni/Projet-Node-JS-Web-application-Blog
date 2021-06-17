@@ -10,14 +10,14 @@ module.exports = function (router) {
 			if(user.password == req.body.password) {
 				var token = jwt.sign({id: user.id}, 'ismykey');
 				return res.status(200).send({
-					message: 'Authentifiaction réussi',
+					message: 'Authentifiaction a réussi',
 					token: token
 				})
 			}
 		}
 
 		return res.status(403).send({
-				message: 'Email ou password est incorrect'
+				message: 'Email ou mot de passe est incorrect!!!'
 		});
 	});
 }
