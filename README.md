@@ -102,6 +102,29 @@ C'est de fait le framework standard pour le développement de serveur en Node.js
 
  ## <strong style="color: green; opacity: 0.80" >5.comment ça marche ?</strong>
  
+![](https://i.imgur.com/0aXiQ0q.png)
+ > Interface de connexion au Blog [color=#fd837b]
+  ---
+  
+![](https://i.imgur.com/7waTiKr.png)
+![](https://i.imgur.com/mrYaj5p.png)
+ > Interface de Gestion des utilisateurs [color=#fd837b]
+  ---
+  
+![](https://i.imgur.com/KHdGKcs.png)
+![](https://i.imgur.com/0OEwobk.png)
+ > Interface de Gestion des articles [color=#fd837b]
+  ---
+  
+![](https://i.imgur.com/zfQfFcg.png)
+![](https://i.imgur.com/y7pmeLQ.png)
+
+ > Interface de Gestion des Commentaires [color=#fd837b]
+  ---
+![](https://i.imgur.com/ym1TnRm.png)
+ > Interface de Gestion des Tags [color=#fd837b]
+  ---
+ 
 :::success
 c'est comme ça :white_check_mark: 
 :::
