@@ -8,7 +8,7 @@ GET http://localhost:8080/users
 DELETE http://localhost:8080/users
 ###
 
-DELETE http://localhost:8080/users/42
+DELETE http://localhost:8080/users/4
 
 ###
 
@@ -17,7 +17,7 @@ content-type: application/json
 
 {
     "username": "khaoula",
-    "email": "elmajnikhaoula9@gmail.com",
+    "email": "elmajni@gmail.com",
     "password": "VFDX3456",
     "role": "admin"
 }
@@ -35,12 +35,12 @@ content-type: application/json
 
 ###
 
-PUT http://localhost:8080/users/32
+PUT http://localhost:8080/users/12
 content-type: application/json
 
 {
     "username": "elmajni",
-    "email": "elmajnikhaoula99@gmail.com",
+    "email": "elmajnii@gmail.com",
     "password": "VFDX3456",
     "role": "admin"
 }
@@ -60,7 +60,7 @@ GET http://localhost:8080/users/authors
 GET http://localhost:8080/users/guests
 
 ### Get user by email
-GET http://localhost:8080/users/email/Einar26@yahoo.com
+GET http://localhost:8080/users/email/Arman@gmail.com
 
 
 
@@ -68,6 +68,10 @@ GET http://localhost:8080/users/email/Einar26@yahoo.com
 GET http://localhost:8080/users/30
 ###
 GET http://localhost:8080/users?usersNbr
+
+### Get article by userid
+GET http://localhost:8080/users/7/articles
+
 
 ###
 GET http://localhost:8080/articles
@@ -111,9 +115,6 @@ content-type: application/json
 ### Step over the first 8 users and take 2 users 
 GET http://localhost:8080/articles/offset/8/limit/2
 
-
-### Get article by userid
-GET http://localhost:8080/users/5/articles
 
 ### Get article by title
 GET http://localhost:8080/articles/title/khaoula
