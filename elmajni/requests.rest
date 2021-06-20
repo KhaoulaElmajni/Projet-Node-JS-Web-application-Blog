@@ -1,7 +1,7 @@
-http://localhost:8080/users/7
+GET http://localhost:8080/users/7
 
 ###
-http://localhost:8080/users
+GET http://localhost:8080/users
 
 ###
 
@@ -22,6 +22,16 @@ content-type: application/json
     "role": "admin"
 }
 
+###
+
+POST http://localhost:8080/users/login 
+content-type: application/json
+
+{
+    "email": "elmajnikhaoula99@gmail.com",
+    "password": "azerty"
+}
+ 
 
 ###
 
@@ -84,6 +94,7 @@ DELETE http://localhost:8080/articles/12
 ###
 
 DELETE http://localhost:8080/articles/19
+
 
 ###
 
