@@ -72,15 +72,19 @@ POST http://localhost:8080/articles
 content-type: application/json
 
 {
-    "title": "YUP",
-    "content": "khaoula khaoula khaoula khaoula khaoula",
+    "title": "ok",
+    "content": "elmajni khaoula khaoula khaoula khaoula",
     "published": 1,
     "userid" : 10
 }
 
 ###
 
-DELETE http://localhost:8080/articles/11
+DELETE http://localhost:8080/articles/12
+###
+
+DELETE http://localhost:8080/articles/19
+
 ###
 
 PUT http://localhost:8080/articles/12
@@ -115,6 +119,9 @@ GET http://localhost:8080/articles?articlesNbr
 http://localhost:8080/comments
 
 ###
+GET http://localhost:8080/comments/offset/8/limit/2
+
+###
 GET http://localhost:8080/comments?commentsNbr
 
 ###
@@ -125,13 +132,13 @@ POST http://localhost:8080/comments
 content-type: application/json
 
 {
-    "content": "khaoula khaoula khaoula khaoula khaoula",
-    "ArticleId": 1
+    "content": "OK OK OK OK",
+    "ArticleId": 8
 }
 
 ###
 
-PUT http://localhost:8080/comments/11
+PUT http://localhost:8080/comments/10
 content-type: application/json
 
 {
@@ -164,7 +171,7 @@ content-type: application/json
 
 ###
 
-PUT http://localhost:8080/tags/11
+PUT http://localhost:8080/tags/10
 content-type: application/json
 
 {

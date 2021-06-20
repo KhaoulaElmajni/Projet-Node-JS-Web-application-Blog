@@ -11,38 +11,59 @@
 <body>
   
 <button type="button" class="btn btn-primary" onclick="logout()">Se déconnecter</button>
-<button type="button" class="btn btn-primary" onclick="articles()">Gérer les articles</button>
+<button type="button" class="btn btn-primary" onclick="users()">Gérer les utilisateurs</button>
 <button type="button" class="btn btn-primary" onclick="comments()">Gérer les Commentaires</button>
 <button type="button" class="btn btn-primary" onclick="tags()">Gérer les Tags</button>
 <br><br>
 <form>
     <fieldset>
-      <legend id="legend"><i class="far fa-user"></i> Ajouter un utilisateur</legend>
+      <legend id="legend"><i class="far fa-newspaper"></i> Ajouter un article</legend>
     <div class="form-group">
-      <label for="exampleInputEmail1">Nom d'utilasteur</label>
-      <input type="text" class="form-control" value="" id="username" aria-describedby="emailHelp" required placeholder="Enter username">
+      <label for="exampleInputEmail1">Titre</label>
+      <input type="text" class="form-control" value="" id="titre" aria-describedby="emailHelp" required placeholder="Entrer un titre">
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail1">Adresse Mail</label>
-      <input type="email" class="form-control" value="" id="email" aria-describedby="emailHelp" required placeholder="Enter email">
+      <label for="exampleInputEmail1">Contenu</label>
+      <input type="text" class="form-control" value="" id="contenu" aria-describedby="emailHelp" required placeholder="Entrer le contenu">
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">Mot de Passe</label>
-      <input type="password" class="form-control" value="" id="password" required placeholder="Password">      
-      <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Role</label>
-      <select id="role" class="form-control">
-        <option value="admin" >Admin</option>
-        <option value="author" >Author</option>
-        <option value="guest" >Guest</option>
+      <label for="exampleInputPassword1">Publié</label>
+      <select id="publie" class="form-control">
+        <option value="1" >vrai</option>
+        <option value="0" >faux</option>
       </select>
       <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
     </div>
-    <button type="submit" id="ajouter" class="btn btn-primary" onclick="addUser()"><i class="fas fa-plus"></i>  Ajouter</button>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Numéro d'utilisateur</label>
+        <select id="userid" class="form-control">
+          <option value="1" >1</option>
+          <option value="2" >2</option>
+          <option value="3" >3</option>
+          <option value="4" >4</option>
+          <option value="5" >5</option>
+          <option value="6" >6</option>
+          <option value="7" >7</option>
+          <option value="8" >8</option>
+          <option value="9" >9</option>
+          <option value="10" >10</option>
+          <option value="11" >11</option>
+          <option value="12" >12</option>
+          <option value="13" >13</option>
+          <option value="14" >14</option>
+          <option value="15" >15</option>
+          <option value="16" >16</option>
+          <option value="17" >17</option>
+          <option value="18" >18</option>
+          <option value="19" >19</option>
+          <option value="20" >20</option>
+          
+        </select>
+        <small id="emailHelp" class="form-text text-muted">Obligatoire.</small>
+      </div>
+    <button type="submit" id="ajouter" class="btn btn-primary" onclick="addArticle()"><i class="fas fa-plus"></i>  Ajouter</button>
     <button type="submit" id="modifier" class="btn btn-primary"><i class="fas fa-pencil-alt"></i> Modifier</button>
     </fieldset>
   </form>
@@ -52,15 +73,16 @@
     <thead>
       <tr>
         <th id="id" scope="col"><i class="fas fa-id-card-alt"></i> id</th>
-        <th id="username" scope="col"><i class="fas fa-user"></i> username</th>
-        <th id="email" scope="col"><i class="fas fa-mail-bulk"></i> email</th>
-        <th id="role" scope="col"><i class="fas fa-user-tag"></i> role</th>
+        <th id="titre" scope="col"><i class="fas fa-text-width"></i> Titre</th>
+        <th id="contenu" scope="col"><i class="fas fa-mail-bulk"></i> Contenu</th>
+        <th id="publie" scope="col"><i class="fas fa-check"></i> Publié</th>
         <th id="createdAt" scope="col"><i class="fas fa-calendar-plus"></i> createdAt</th>
         <th id="updatedAt " scope="col"><i class="fas fa-user-edit"></i> updatedAt</th>
+        <th id="userid" scope="col"><i class="fas fa-user-tag"></i> User Id</th>
         <th id="action" scope="col"><i class="fas fa-tools"></i> action</th>
       </tr>
     </thead>
-    <tbody id="users">
+    <tbody id="articles">
       
     </tbody>
 
@@ -80,24 +102,24 @@
 
       <script>
 
-         var totalUserCount = 0;
+         var totalArticleCount = 0;
          var nbr = 0;
 
          //fonction d'ajout d'un utilisateur
-         function addUser(){
-          let email = document.getElementById("email").value;
-              let username = document.getElementById("username").value;
-              let password = document.getElementById("password").value;
-              let role = document.getElementById("role").value;
+         function addArticle(){
+          let titre = document.getElementById("titre").value;
+              let contenu = document.getElementById("contenu").value;
+              let publie = document.getElementById("publie").value;
+              let userid = document.getElementById("userid").value;
           var data = {
-            email : email,
-            username : username,
-            password :password,
-            role : role
+            title : titre,
+            content : contenu,
+            published :publie,
+            UserId: userid
           };
           let body  = JSON.stringify(data);
          
-          fetch('/users', {
+          fetch('/articles', {
               method: 'POST',
               body: body,
               headers: {
@@ -108,29 +130,29 @@
             }).then(function (response) {
                 return response.json();
             }).then(function (data){
-              swal.fire("l'utilisateur a été ajouté ", "ok", "success");
+              swal.fire("l'article a été ajouté ", "ok", "success");
                     nbr = 0;
-                    getListOfUsers(nbr);
+                    getListOfarticles(nbr);
                     console.log(data);
                     
             });
         } 
 
         function sendPutRequest(id){
-          let email = document.getElementById("email").value;
-              let username = document.getElementById("username").value;
-              let password = document.getElementById("password").value;
-              let role = document.getElementById("role").value; 
+          let titre = document.getElementById("titre").value;
+              let contenu = document.getElementById("contenu").value;
+              let publie = document.getElementById("publie").value;
+              let userid = document.getElementById("userid").value; 
               
           var data = {
-            email : email,
-            username : username,
-            password :password,
-            role : role
+            title : titre,
+            content : contenu,
+            published :publie,
+            UserId : userid
           };
           let body  = JSON.stringify(data);
          
-          fetch('/users/'+id, {
+          fetch('/articles/'+id, {
               method: 'PUT',
               body: body,
               headers: {
@@ -144,7 +166,7 @@
               if(data.status === 200){
               document.getElementById("ajouter").style.display = "block";
               document.getElementById("modifier").style.display = "none";
-              swal.fire("l'utilisateur a été modifié");
+              swal.fire("l'article a été modifié");
               nbr = 0;
               
               getNextFiveElt(nbr);
@@ -155,35 +177,35 @@
         }
         
          //fonction de modification d'un utilisateur
-         function updateUser(id){
-          fetch('/users/'+id, {
+         function updateArticle(id){
+          fetch('/articles/'+id, {
               method: 'GET'
             }).then(function (response) {
                 return response.json();
             }).then(function (data){
-              let email = document.getElementById("email");
-              let username = document.getElementById("username");
-              let password = document.getElementById("password");
-              let role = document.getElementById("role");
+              let titre = document.getElementById("titre");
+              let contenu = document.getElementById("contenu");
+              let publie = document.getElementById("publie");
+              let userid = document.getElementById("userid");
 
               if(data.status === 200){
               document.getElementById("ajouter").style.display = "none";
               document.getElementById("modifier").style.display = "block";
               document.getElementById("modifier").setAttribute('onclick','sendPutRequest('+id+');');
-              email.value = data.content.email;
-              username.value = data.content.username;
-              password.value = data.content.password;
-              role.value = data.content.role;
+              titre.value = data.content.title;
+              contenu.value = data.content.content;
+              publie.value = data.content.published;
+              userid.value = data.content.UserId;
              
-              swal.fire("Vous etes en train de modifier l'utilisateur "+username.value);
+              swal.fire("Vous etes en train de modifier l'article "+titre.value);
               }
             });
          }
 
-         //fonction de suppression d'un utilisateur
-         function deleteUser(id){
+         //fonction de suppression d'un article
+         function deleteArticle(id){
           Swal.fire({
-            title: 'Voulez-vous vraiment supprimé cet utilisateur ?',
+            title: 'Voulez-vous vraiment supprimé cet article ?',
             showDenyButton: true,
             showCancelButton: false,
             confirmButtonText: `Supprimer`,
@@ -191,54 +213,55 @@
           }).then((result) => {
 
             if (result.isConfirmed) {
-              fetch('/users/'+id, {
+              fetch('/articles/'+id, {
               method: 'DELETE'
             }).then(function (response) {
                 return response.json();
              
             }).then(function (data){
               console.log(data);
-                    Swal.fire("Supprimé!", "l\'utilisateur est supprimé.", "success");
+                    Swal.fire("Supprimé!", "l\'article est supprimé.", "success");
                     nbr = 0;
-                    getListOfUsers(nbr);
+                    getListOfarticles(nbr);
             });
               
             } else if (result.isDenied) {
-              Swal.fire('l\'utilisateur n\'est pas supprimé', '', 'info')
+              Swal.fire('l\'article n\'est pas supprimé', '', 'info')
             }
           })
           
         }
 
         function getList(){
-          let list = document.getElementById("users")
+          let list = document.getElementById("articles")
           }
-        function getListOfUsers(offset) {
-            fetch('/users/offset/'+offset+'/limit/'+5, {
+        function getListOfarticles(offset) {
+            fetch('/articles/offset/'+offset+'/limit/'+5, {
               method: 'GET'
             }).then(function (response) {
                 return response.json();
             }).then(function (data){
                 var tr;
-                $('#users').html('');
+                $('#articles').html('');
                 for (var i = 0; i < data.length; i++) {
                     tr = $('<tr/>');
                     tr.append("<td>" + data[i].id + "</td>");
-                    tr.append("<td>" + data[i].username + "</td>");
-                    tr.append("<td>" + data[i].email + "</td>");
-                    tr.append("<td>" + data[i].role + "</td>");
+                    tr.append("<td>" + data[i].title + "</td>");
+                    tr.append("<td>" + data[i].content + "</td>");
+                    tr.append("<td>" + data[i].published + "</td>");
                     tr.append("<td>" + data[i].createdAt + "</td>");
                     tr.append("<td>" + data[i].updatedAt + "</td>");
-                    tr.append("<td><button style='margin-right: 8px' class=\"btn btn-success btn-round\" onclick=\"updateUser("+data[i].id+")\" type=\"button\"><i class=\"fas fa-pen\"></i></button><button class=\"btn btn-danger btn-round\" onclick=\"deleteUser("+data[i].id+")\" type=\"button\"><i class=\"fas fa-trash\"></i></button></td>")
-                    $('#users').append(tr);
+                    tr.append("<td>" + data[i].UserId + "</td>");
+                    tr.append("<td><button style='margin-right: 8px' class=\"btn btn-success btn-round\" onclick=\"updateArticle("+data[i].id+")\" type=\"button\"><i class=\"fas fa-pen\"></i></button><button class=\"btn btn-danger btn-round\" onclick=\"deleteArticle("+data[i].id+")\" type=\"button\"><i class=\"fas fa-trash\"></i></button></td>")
+                    $('#articles').append(tr);
                 }
             });
           }
 
           function getNextFiveElt(){
             document.getElementById("previous").disabled = false;
-            if(nbr < totalUserCount){
-              getListOfUsers(nbr);
+            if(nbr < totalArticleCount){
+              getListOfarticles(nbr);
               nbr+=5;
             }
             else{
@@ -250,7 +273,7 @@
           function getPreviousFiveElt(){
             if(nbr>0){
               nbr-=5;
-              getListOfUsers(nbr);
+              getListOfarticles(nbr);
             }
             if(document.getElementById("next").disabled)
               document.getElementById("next").disabled = false;  
@@ -260,14 +283,14 @@
           }
             
 
-          function getTotalUsersCount() {
-            fetch('/users?usersNbr', {
+          function getTotalArtilcesCount() {
+            fetch('/articles?articlesNbr', {
               method: 'GET'
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
-              totalUserCount = parseInt(data.message);
-              console.log(totalUserCount);
+              totalArticleCount = parseInt(data.message);
+              console.log(totalArticleCount);
               getNextFiveElt();
               document.getElementById("previous").disabled = true;
             });
@@ -277,18 +300,17 @@
        </script>
 
        <script>
-        getTotalUsersCount();
+        getTotalArtilcesCount();
 //fct pour logout ==> supprimer la cookie        
 function logout() {
     eraseCookie("jwt");
     location.href="login.html";
 }
 
-function articles() {
+function users() {
     
-    location.href="articles.html";
+    location.href="index.html";
 }
-
 function comments() {
     
     location.href="comments.html";
@@ -296,8 +318,9 @@ function comments() {
 
 function tags() {
     
-    location.href="tags.html";
+    location.href="comments.html";
 }
+
     let token = getCookie("jwt");
     if (token === undefined) {
       location.href = "login.html";

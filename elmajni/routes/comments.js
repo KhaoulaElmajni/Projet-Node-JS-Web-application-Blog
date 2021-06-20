@@ -2,10 +2,17 @@
 var express = require('express');
 var router = express.Router();
 const commentsRepo = require('../repositories/comments')
+
 router.get('/', async function (req, res, next) {
-   const message = await commentsRepo.getArticleTitleAndNbrOfComments();
-   res.send(message)
+   const commentsNbr = req.query.commentsNbr;
+   if(commentsNbr == undefined)
+      res.send(await commentsRepo.getAllComments)
+   else
+      res.send(await commentsRepo.getAllCommentsNumber())
+   //const message = await commentsRepo.getArticleTitleAndNbrOfComments();
+   //res.send(message)
 });
+
 
 router.get('/offset/:offset/limit/:limit', async function (req, res, next) {
    const offset = req.params.offset

@@ -36,12 +36,12 @@ router.get('/title/:title', async function (req, res, next) {
     res.send(await articlesRepo.getArticlesByTitle(title))
 });
 
-/*
+
 router.delete('/:id', async function (req, res, next) {
     const id = req.params.id;
     res.send(await articlesRepo.deleteArticle(id))
 });
-*/
+
 
 router.delete('/', async function (req, res, next) {
     res.send(await articlesRepo.deleteAllArticles())
